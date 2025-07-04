@@ -3,8 +3,6 @@ name: Go Windows Build
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,7 +20,10 @@ jobs:
       run: go mod init github.com/Mr-zhoulihuan/Mr-zhoulihuan
     
     - name: Build
-      run: go build -v -o myapp.exe main.go  # 明确指定输入文件和输出名称
+      run: go build -v -o myapp.exe main.go
     
-    - name: Test (if you have tests)
-      run: go test -v ./...
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-executable
+        path: myapp.exe
